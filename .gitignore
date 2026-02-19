@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# Virtual Environments
+venv/
+.env/
+.env.*
+
+# Logs
+*.log
+
+# Mac
+.DS_Store
+
+# Pytest
+.pytest_cache/
+
+# VSCode
+.vscode/
+
+# Database
+*.db
+users.db
+test.db
+
+# Coverage
+htmlcov/
+.coverage
+
+# Archives
+*.tar.gz
+*.tar
+*.zip
+

@@ -1,0 +1,45 @@
+steps:
+
+  # 1️⃣ Run tests
+  - name: 'python:3.11'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
+        pytest --cov=app --cov-report=term-missing
+
+  # 2️⃣ Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/repository/latam-user-api:$BUILD_ID'
+      - '.'
+
+  # 3️⃣ Push image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/repository/latam-user-api:$BUILD_ID'
+
+  # 4️⃣ Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud run deploy latam-user-api \
+          --image us-central1-docker.pkg.dev/$PROJECT_ID/repository/latam-user-api:$BUILD_ID \
+          --platform managed \
+          --region us-central1 \
+          --add-cloudsql-instances latamchallenge-487721:us-central1:latam-user-db \
+          --set-env-vars DB_USER=latam_user,DB_PASS=latam_pass,DB_NAME=latamdb,CLOUD_SQL_CONNECTION_NAME=latamchallenge-487721:us-central1:latam-user-db \
+          --allow-unauthenticated
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/repository/latam-user-api:$BUILD_ID'
+
+timeout: '1200s'

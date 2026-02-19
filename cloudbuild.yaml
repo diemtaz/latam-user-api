@@ -2,6 +2,8 @@ steps:
 
   # 1️⃣ Run tests
   - name: 'python:3.11'
+    env:
+      - ENV=test
     entrypoint: bash
     args:
       - -c

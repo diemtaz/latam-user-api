@@ -9,9 +9,13 @@ from app.services.user_service import UserService
 
 router = APIRouter(tags=["Users"])
 
-@router.post("/", response_model=UserResponse)
+@router.post(
+    "/",
+    response_model=UserResponse,
+    status_code=status.HTTP_201_CREATED
+)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    return UserRepository.create(db, user)
+    return UserService.create_user(db, user)
 
 
 @router.get(

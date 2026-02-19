@@ -18,7 +18,7 @@ This project was developed as part of a technical challenge and demonstrates cle
 ---
 
 # 📂 Project Structure
-
+```text
 latam-user-api/
 │
 ├── app/
@@ -31,9 +31,7 @@ latam-user-api/
 │
 ├── requirements.txt
 └── README.md
-
-yaml
-Copiar código
+```
 
 ---
 

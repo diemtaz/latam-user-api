@@ -48,13 +48,17 @@ def on_startup():
 # -----------------------------
 # Root Endpoint (Landing Page)
 # -----------------------------
-@app.get("/", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
 def root():
     return """
     <!DOCTYPE html>
     <html>
         <head>
             <title>LATAM User API</title>
+
+             <!-- FAVICON -->
+            <link rel="icon" type="image/png" href="/static/icono.png">
+            
             <style>
                 body {
                     font-family: Arial, sans-serif;
